@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BrainCracker - Alphabet Number Brain Training Game</title>
+<meta name="description" content="Play the Alphabet Number Brain Game. Convert A-Z into numbers and test your brain speed. Free online brain training tool.">
+<style>
+
+body{
+    font-family:Arial;
+    background:#f4f4f4;
+    text-align:center;
+    margin:0;
+}
+
+.container{
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    width:80%;
+    max-width:900px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    margin:60px auto;
+}
+
+#letter{
+    font-size:70px;
+    font-weight:bold;
+    margin:20px;
+}
+
+input{
+    padding:12px;
+    font-size:18px;
+    width:120px;
+    text-align:center;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+button{
+    padding:10px 20px;
+    margin-top:15px;
+    font-size:16px;
+    border:none;
+    background:#2980b9;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1c5d87;
+}
+
+.correct{color:green;}
+.wrong{color:red;}
+
+#result{
+    font-weight:bold;
+    height:24px;
+    margin-top:10px;
+}
+
+.summary{
+    margin-top:20px;
+    font-size:16px;
+}
+
+#restart{
+    display:none;
+    background:#27ae60;
+}
+nav{
+    background:#222;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    margin:15px;
+    text-decoration:none;
+    font-weight:bold;
+    position:relative;
+}
+
+/* Hover underline effect */
+nav a::after{
+    content:'';
+    position:absolute;
+    width:0;
+    height:2px;
+    left:0;
+    bottom:-5px;
+    background:white;
+    transition:0.3s;
+}
+
+nav a:hover::after{
+    width:100%;
+}
+</style>
+
+</head>
+
+<body>
+<nav style="background:#222;padding:15px;">
+<a href="index.html" style="color:white;margin:15px;text-decoration:none;">Home</a>
+<a href="about.html" style="color:white;margin:15px;text-decoration:none;">About</a>
+<a href="privacy.html" style="color:white;margin:15px;text-decoration:none;">Privacy</a>
+<a href="contact.html" style="color:white;margin:15px;text-decoration:none;">Contact</a>
+</nav>
+
+<div class="container">
+    <h1>Alphabet Number Brain Speed Test</h1>
+    <p>
+This brain training game tests how quickly you can convert alphabets into numbers.
+Example: A = 1, B = 2, C = 3 ... Z = 26.
+Try to complete all 26 alphabets as fast as possible and check your accuracy.
+</p>
+
+<h2>Alphabet Number Game</h2>
+
+<div id="letter">A</div>
+
+<p>Enter number (A=1 ... Z=26)</p>
+
+<input type="number" id="answer" autofocus>
+
+<br>
+
+<button id="submitBtn" onclick="checkAnswer()">Submit</button>
+
+<div id="result"></div>
+
+<p>Score: <span id="score">0</span> |
+Question: <span id="progress">1</span>/26</p>
+
+<div id="summary" class="summary"></div>
+
+<button id="restart" onclick="restartGame()">Restart Game</button>
+
+</div>
+
+<script>
+
+let letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+let shuffled=[];
+let index=0;
+let score=0;
+let currentLetter;
+
+let wrongLetters=[];
+
+let startTime;
+let endTime;
+
+function shuffle(){
+    shuffled=[...letters].sort(()=>Math.random()-0.5);
+}
+
+function nextLetter(){
+
+    if(index===0){
+        startTime=Date.now();
+    }
+
+    if(index>=26){
+        endGame();
+        return;
+    }
+
+    currentLetter=shuffled[index];
+
+    document.getElementById("letter").textContent=currentLetter;
+    document.getElementById("answer").value="";
+    document.getElementById("answer").focus();
+
+    document.getElementById("progress").textContent=index+1;
+}
+
+function checkAnswer(){
+
+    let user=Number(document.getElementById("answer").value);
+    let correct=currentLetter.charCodeAt(0)-64;
+
+    let result=document.getElementById("result");
+
+    if(user===correct){
+
+        result.textContent="✔ Correct!";
+        result.className="correct";
+        score++;
+
+    }else{
+
+        result.textContent="✘ Wrong! Correct: "+correct;
+        result.className="wrong";
+
+        wrongLetters.push(currentLetter);
+    }
+
+    document.getElementById("score").textContent=score;
+
+    index++;
+
+    setTimeout(nextLetter,100);
+}
+
+function endGame(){
+
+    endTime=Date.now();
+
+    let totalTime=((endTime-startTime)/1000).toFixed(2);
+
+    let accuracy=((score/26)*100).toFixed(1);
+
+    document.getElementById("letter").textContent="Finished";
+
+    document.getElementById("answer").style.display="none";
+    document.getElementById("submitBtn").style.display="none";
+
+    document.getElementById("summary").innerHTML=
+
+    "<b>Game Over</b><br><br>"+
+    "Accuracy: "+accuracy+"%<br>"+
+    "Total Time: "+totalTime+" seconds<br>"+
+    "Wrong Letters: "+(wrongLetters.length?wrongLetters.join(", "):"None");
+
+    document.getElementById("restart").style.display="inline-block";
+}
+
+function restartGame(){
+
+    index=0;
+    score=0;
+    wrongLetters=[];
+    document.getElementById("score").textContent="0";
+    document.getElementById("summary").innerHTML="";
+    document.getElementById("result").textContent="";
+
+    document.getElementById("answer").style.display="inline-block";
+    document.getElementById("submitBtn").style.display="inline-block";
+    document.getElementById("restart").style.display="none";
+
+    shuffle();
+    nextLetter();
+}
+
+document.getElementById("answer").addEventListener("keypress",function(e){
+    if(e.key==="Enter"){
+        checkAnswer();
+    }
+});
+
+shuffle();
+nextLetter();
+
+</script>
+
+</body>
+</html>
