@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3C628BL14N"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4084947154600106"
-     crossorigin="anonymous"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -13,105 +12,395 @@
   gtag('config', 'G-3C628BL14N');
 </script>
 <title>BrainCracker Games - Alphabet Number Brain Training Game</title>
+<meta name="google-adsense-account" content="ca-pub-6068335207506682">
 <meta name="google-site-verification" content="NuIlSODWhBoG4Wm_5OVJWiWee5rXZ7eMuAcq12M2kjY">
 <meta name="description" content="BrainCracker Games helps improve brain speed with alphabet to number conversion games. Test your brain and improve memory online.">
 <meta name="keywords" content="brain games, alphabet number game,alphabet game, alphabet series, brain training, speed test, memory games, braincracker games">
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="icon" href="favicon1.png" type="image/png">
 <style>
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
-    font-family:Arial;
-    background:#f4f4f4;
-    text-align:center;
-    margin:0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-align: center;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .container{
-    background:white;
-    padding:40px;
-    border-radius:12px;
-    width:80%;
-    max-width:900px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
-    margin:60px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 900px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    margin: 40px auto;
+}
+
+.container h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5em;
+    color: #667eea;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.container h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.container p {
+    color: #666;
+    font-size: 1.05em;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 #letter{
-    font-size:70px;
-    font-weight:bold;
-    margin:20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 100px;
+    font-weight: 800;
+    margin: 30px 0;
+    color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#enterText {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 15px;
+    font-weight: 500;
 }
 
 input{
-    padding:12px;
-    font-size:18px;
-    width:120px;
-    text-align:center;
-    border-radius:6px;
-    border:1px solid #ccc;
+    padding: 12px 16px;
+    font-size: 18px;
+    width: 150px;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: scale(1.05);
 }
 
 button{
-    padding:10px 20px;
-    margin-top:15px;
-    font-size:16px;
-    border:none;
-    background:#2980b9;
-    color:white;
-    border-radius:6px;
-    cursor:pointer;
+    padding: 12px 24px;
+    margin: 10px 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 button:hover{
-    background:#1c5d87;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
-.correct{color:green;}
-.wrong{color:red;}
+button:active {
+    transform: translateY(0);
+}
+
+button#hintBtn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+button#hintBtn:hover {
+    box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+}
+
+button#skipBtn {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+}
+
+button#skipBtn:hover {
+    box-shadow: 0 6px 20px rgba(250, 112, 154, 0.6);
+}
+
+#submitBtn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#restart {
+    display: none;
+    background: linear-gradient(135deg, #64B5F6 0%, #2196F3 100%);
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+}
+
+#restart:hover {
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
+}
+
+.correct {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.wrong {
+    color: #e74c3c;
+    font-weight: 600;
+}
 
 #result{
-    font-weight:bold;
-    height:24px;
-    margin-top:10px;
+    font-weight: 600;
+    height: 24px;
+    margin-top: 15px;
+    font-size: 1.05em;
+    min-height: 28px;
+}
+
+/* Game Controls Section */
+.controls-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid #e9ecef;
+}
+
+.controls-section label {
+    font-weight: 600;
+    color: #333;
+    display: inline-block;
+    margin: 10px 15px;
+}
+
+.controls-section select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.controls-section select:hover {
+    border-color: #667eea;
+}
+
+.controls-section select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#progressBar {
+    height: 12px;
+    width: 100%;
+    max-width: 420px;
+    background: #e9ecef;
+    border-radius: 10px;
+    margin: 20px auto;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#progressFill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+}
+
+/* Stats Section */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.stat-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.stat-item label {
+    display: block;
+    font-size: 0.85em;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.stat-item span {
+    display: block;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #667eea;
+    font-family: 'Poppins', sans-serif;
 }
 
 .summary{
-    margin-top:20px;
-    font-size:16px;
+    margin-top: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+    font-size: 1.05em;
+    line-height: 1.8;
 }
 
-#restart{
-    display:none;
-    background:#27ae60;
+.summary b {
+    font-size: 1.3em;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
 }
+
 nav{
-    background:#222;
-    padding:15px;
+    background: white;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, #667eea 0%, #764ba2 100%) 1;
+    backdrop-filter: blur(10px);
+}
+
+nav > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+nav img {
+    max-height: 60px;
+    transition: transform 0.3s ease;
+}
+
+nav img:hover {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    gap: 35px;
+    align-items: center;
 }
 
 nav a{
-    color:white;
-    margin:15px;
-    text-decoration:none;
-    font-weight:bold;
-    position:relative;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    padding: 8px 0;
 }
 
-/* Hover underline effect */
+nav a:hover {
+    color: #667eea;
+}
+
+/* Professional underline effect */
 nav a::after{
     content:'';
-    position:absolute;
-    width:0;
-    height:2px;
-    left:0;
-    bottom:-5px;
-    background:white;
-    transition:0.3s;
+    position: absolute;
+    width: 0;
+    height: 3px;
+    left: 0;
+    bottom: -8px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 nav a:hover::after{
-    width:100%;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav > div {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .nav-left {
+        gap: 15px;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    
+    .container {
+        padding: 25px;
+        margin: 20px auto;
+    }
+    
+    .container h1 {
+        font-size: 1.8em;
+    }
+    
+    #letter {
+        font-size: 60px;
+    }
+    
+    .controls-section label {
+        display: block;
+        margin: 8px 0;
+    }
+    
+    .stats-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    button {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
 }
 </style>
 
@@ -119,166 +408,433 @@ nav a:hover::after{
 
 <body>
 
-<nav style="display:flex; align-items:center; margin-bottom:20px;">
-  <!-- Logo -->
-  <a href="index.html">
-    <img src="logo.png" alt="BrainCracker Logo" style="height:70px; margin-right:15px;">
-  </a>
+<nav>
+  <div>
+    <div class="nav-left">
+      <!-- Logo -->
+      <a href="index.html" style="position: relative; bottom: 0;">
+        <img src="logo.png" alt="BrainCracker Logo">
+      </a>
+      
+      <!-- Brand Name -->
+      <div style="font-family: 'Poppins', sans-serif; font-size: 1.3em; font-weight: 700; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        BrainCracker
+      </div>
+    </div>
 
-  <!-- Menu links -->
-  <div style="display:flex; gap:15px; align-items:center; font-weight:bold;">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="contact.html">Contact</a>
+    <!-- Menu links -->
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </div>
 </nav>
 
 <div class="container">
-    <h1>Alphabet Number Brain Speed Test</h1>
+    <h1>🧠 Brain Speed Test</h1>
     <p>
-This brain training game tests how quickly you can convert alphabets into numbers.
-Example: A = 1, B = 2, C = 3 ... Z = 26.
-Try to complete all 26 alphabets as fast as possible and check your accuracy.
+Sharpen your mind with our brain training games. Convert alphabets to numbers, calculate squares and cubes, and compete against the clock. Track your accuracy and challenge yourself to improve!
 </p>
 
-<h2>Alphabet Number Game</h2>
+<h2>Choose Your Game</h2>
+
+<div class="controls-section">
+  <label>Game:
+    <select id="gameType" style="padding:6px; border-radius:6px; border:1px solid #ccc;">
+      <option value="alphabet">Alphabet Number Game</option>
+      <option value="number-square">Number Square Game (1→1² ... 30→900)</option>
+      <option value="number-cube">Number Cube Game (1→1³ ... 20→8000)</option>
+    </select>
+  </label>
+  <br>
+  <label>Mode:
+    <select id="mode" style="padding:6px; border-radius:6px; border:1px solid #ccc;">
+      <option value="letter-number">Letter → Number (alphabet)</option>
+      <option value="number-letter">Number → Letter (alphabet)</option>
+      <option value="num-square">Number → Square (1..30)</option>
+      <option value="square-num">Square → Number (1..900)</option>
+      <option value="mixed">Mixed Mode</option>
+    </select>
+  </label>
+  <br>
+  <label>Difficulty:
+    <select id="difficulty" style="padding:6px; border-radius:6px; border:1px solid #ccc;">
+      <option value="easy">Easy (A→Z)</option>
+      <option value="hard">Hard (Random letters)</option>
+    </select>
+  </label>
+  <br>
+  <button id="hintBtn" onclick="showHint()" style="background:#444;">💡 Hint</button>
+  <button id="skipBtn" onclick="skipQuestion()" style="background:#8e44ad;">⏭ Skip</button>
+</div>
 
 <div id="letter">A</div>
 
-<p>Enter number (A=1 ... Z=26)</p>
+<p id="enterText">Enter number (A=1 ... Z=26)</p>
 
-<input type="number" id="answer" autofocus>
+<input type="text" id="answer" autofocus>
 
-<br>
+<div id="progressBar" style="height:10px; width:100%; max-width:420px; background:#ddd; border-radius:5px; margin:8px auto; overflow:hidden;">
+  <div id="progressFill" style="height:100%; width:0; background:#2980b9;"></div>
+</div>
 
-<button id="submitBtn" onclick="checkAnswer()">Submit</button>
+<button id="submitBtn" onclick="checkAnswer()">✓ Submit</button>
 
 <div id="result"></div>
 
-<p>Score: <span id="score">0</span> |
-Question: <span id="progress">1</span>/26</p>
+<div class="stats-section">
+  <div class="stat-item">
+    <label>Score</label>
+    <span id="score">0</span>
+  </div>
+  <div class="stat-item">
+    <label>Time</label>
+    <span id="timer">00:00</span>
+  </div>
+  <div class="stat-item">
+    <label>Progress</label>
+    <span id="progress">0</span>/<span style="font-size: 0.8em;" id="progressTotal">26</span>
+  </div>
+</div>
 
 <div id="summary" class="summary"></div>
 
-<button id="restart" onclick="restartGame()">Restart Game</button>
+<button id="restart" onclick="restartGame()">↺ Restart Game</button>
 
 </div>
 
 <script>
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+let totalQuestions = 26;
+let index = 0;
+let score = 0;
+let wrongLetters = [];
+let startTime = null;
+let timerInterval = null;
+let currentQuestion = null;
+let questionDeck = [];
 
-let letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
-let shuffled=[];
-let index=0;
-let score=0;
-let currentLetter;
+function updateModeOptions(){
+  const gameType = getGameType();
+  const modeSelect = document.getElementById("mode");
+  const difficultySelect = document.getElementById("difficulty");
+  modeSelect.innerHTML = "";
+  difficultySelect.innerHTML = "";
 
-let wrongLetters=[];
-
-let startTime;
-let endTime;
-
-function shuffle(){
-    shuffled=[...letters].sort(()=>Math.random()-0.5);
+  if(gameType === "alphabet"){
+    modeSelect.innerHTML = `
+      <option value="letter-number">Letter → Number</option>
+      <option value="number-letter">Number → Letter</option>
+      <option value="mixed">Mixed Mode</option>
+    `;
+    difficultySelect.innerHTML = `
+      <option value="easy">Easy (A→Z)</option>
+      <option value="hard">Hard (Random letters)</option>
+    `;
+  } else if(gameType === "number-square"){
+    modeSelect.innerHTML = `
+      <option value="num-square">Number → Square</option>
+      <option value="square-num">Square → Number</option>
+      <option value="mixed">Mixed Mode</option>
+    `;
+    difficultySelect.innerHTML = `
+      <option value="easy">Easy (1→30)</option>
+      <option value="hard">Hard (Random numbers)</option>
+    `;
+  } else if(gameType === "number-cube"){
+    modeSelect.innerHTML = `
+      <option value="num-cube">Number → Cube</option>
+      <option value="cube-num">Cube → Number</option>
+      <option value="mixed">Mixed Mode</option>
+    `;
+    difficultySelect.innerHTML = `
+      <option value="easy">Easy (1→20)</option>
+      <option value="hard">Hard (Random numbers)</option>
+    `;
+  }
 }
 
-function nextLetter(){
+function getGameType(){
+  return document.getElementById("gameType").value;
+}
 
-    if(index===0){
-        startTime=Date.now();
+function getMode(){
+  return document.getElementById("mode").value;
+}
+
+function getEffectiveMode(){
+  const gameType = getGameType();
+  let mode = getMode();
+  if(gameType === "alphabet"){
+    if(mode === "num-square" || mode === "square-num" || mode === "num-cube" || mode === "cube-num") mode = "letter-number";
+  } else if(gameType === "number-square"){
+    if(mode === "letter-number" || mode === "number-letter" || mode === "num-cube" || mode === "cube-num") mode = "num-square";
+  } else if(gameType === "number-cube"){
+    if(mode === "letter-number" || mode === "number-letter" || mode === "num-square" || mode === "square-num") mode = "num-cube";
+  }
+  return mode;
+}
+
+function getDifficulty(){
+  return document.getElementById("difficulty").value;
+}
+
+function createDeck(){
+  const gameType = getGameType();
+
+  if(gameType === "number-square"){
+    questionDeck = Array.from({ length: 30 }, (_, i) => i + 1);
+  } else if(gameType === "number-cube"){
+    questionDeck = Array.from({ length: 20 }, (_, i) => i + 1);
+  } else {
+    questionDeck = [...letters];
+  }
+
+  if(getDifficulty() === "hard"){
+    questionDeck.sort(() => Math.random() - 0.5);
+  }
+
+  totalQuestions = questionDeck.length;
+  index = 0;
+  document.getElementById("progressTotal").textContent = totalQuestions;
+}
+
+function questionForLetter(item){
+  const gameType = getGameType();
+  const mode = getEffectiveMode();
+
+  if(gameType === "number-square"){
+    const n = Number(item);
+    if(mode === "num-square"){
+      return { prompt: String(n), answer: String(n * n), type: "numsq" };
     }
-
-    if(index>=26){
-        endGame();
-        return;
+    if(mode === "square-num"){
+      return { prompt: String(n * n), answer: String(n), type: "sqnum" };
     }
+    // mixed number-square mode
+    if(Math.random() < 0.5){
+      return { prompt: String(n), answer: String(n * n), type: "numsq" };
+    }
+    return { prompt: String(n * n), answer: String(n), type: "sqnum" };
+  }
 
-    currentLetter=shuffled[index];
+  if(gameType === "number-cube"){
+    const n = Number(item);
+    if(mode === "num-cube"){
+      return { prompt: String(n), answer: String(n * n * n), type: "numcube" };
+    }
+    if(mode === "cube-num"){
+      return { prompt: String(n * n * n), answer: String(n), type: "cubenum" };
+    }
+    // mixed number-cube mode
+    if(Math.random() < 0.5){
+      return { prompt: String(n), answer: String(n * n * n), type: "numcube" };
+    }
+    return { prompt: String(n * n * n), answer: String(n), type: "cubenum" };
+  }
 
-    document.getElementById("letter").textContent=currentLetter;
-    document.getElementById("answer").value="";
-    document.getElementById("answer").focus();
+  if(mode === "letter-number"){
+    return { prompt: item, answer: String(item.charCodeAt(0) - 64), type: "num" };
+  }
+  if(mode === "number-letter"){
+    return { prompt: String(item.charCodeAt(0) - 64), answer: item, type: "letter" };
+  }
+  // mixed alphabet mode
+  if(Math.random() < 0.5){
+    return { prompt: item, answer: String(item.charCodeAt(0) - 64), type: "num" };
+  }
+  return { prompt: String(item.charCodeAt(0) - 64), answer: item, type: "letter" };
+}
 
-    document.getElementById("progress").textContent=index+1;
+function updateTimer(){
+  if(startTime === null) {
+    document.getElementById("timer").textContent = "00:00";
+    return;
+  }
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const mins = String(Math.floor(elapsed / 60)).padStart(2, "0");
+  const secs = String(elapsed % 60).padStart(2, "0");
+  document.getElementById("timer").textContent = `${mins}:${secs}`;
+}
+
+function refreshPrompt(){
+  if(index >= totalQuestions){
+    endGame();
+    return;
+  }
+
+  if(startTime === null && timerInterval !== null){
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  currentQuestion = questionForLetter(questionDeck[index]);
+
+  document.getElementById("letter").textContent = currentQuestion.prompt;
+  const text = currentQuestion.type === "num" ? "Enter number (A=1 ... Z=26)"
+    : currentQuestion.type === "letter" ? "Enter letter (1=A ... 26=Z)"
+    : currentQuestion.type === "numsq" ? "Enter square (1→1, 2→4 ... 30→900)"
+    : currentQuestion.type === "sqnum" ? "Enter number (from square, 1..30)"
+    : currentQuestion.type === "numcube" ? "Enter cube (1→1, 2→8 ... 20→8000)"
+    : currentQuestion.type === "cubenum" ? "Enter number (from cube, 1..20)"
+    : "Enter answer";
+  document.getElementById("enterText").textContent = text;
+
+  const answerInput = document.getElementById("answer");
+  answerInput.value = "";
+  answerInput.placeholder = currentQuestion.type === "num" ? "Type 1-26"
+    : currentQuestion.type === "letter" ? "Type A-Z"
+    : currentQuestion.type === "numsq" ? "Type 1..900"
+    : currentQuestion.type === "sqnum" ? "Type 1..30"
+    : currentQuestion.type === "numcube" ? "Type 1..8000"
+    : currentQuestion.type === "cubenum" ? "Type 1..20"
+    : "Type answer";
+  answerInput.focus();
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const q = Math.min(index + 1, totalQuestions);
+  document.getElementById("progress").textContent = q;
+  const width = ((q - 1) / totalQuestions) * 100;
+  document.getElementById("progressFill").style.width = `${width}%`;
+  document.getElementById("score").textContent = score;
+  updateTimer();
 }
 
 function checkAnswer(){
+  if(startTime === null){
+    startTime = Date.now();
+    clearInterval(timerInterval);
+    timerInterval = setInterval(updateTimer, 250);
+  }
 
-    let user=Number(document.getElementById("answer").value);
-    let correct=currentLetter.charCodeAt(0)-64;
+  const answerInput = document.getElementById("answer");
+  let user = answerInput.value.trim();
+  if(!user){
+    document.getElementById("result").textContent = "Enter your answer first.";
+    document.getElementById("result").className = "wrong";
+    return;
+  }
 
-    let result=document.getElementById("result");
+  if(currentQuestion.type === "letter"){
+    user = user.toUpperCase();
+  }
 
-    if(user===correct){
-
-        result.textContent="✔ Correct!";
-        result.className="correct";
-        score++;
-
-    }else{
-
-        result.textContent="✘ Wrong! Correct: "+correct;
-        result.className="wrong";
-
-        wrongLetters.push(currentLetter);
+  if(currentQuestion.type === "num" || currentQuestion.type === "numsq" || currentQuestion.type === "sqnum" || currentQuestion.type === "numcube" || currentQuestion.type === "cubenum"){
+    user = Number(user);
+    if(!Number.isFinite(user)){
+      document.getElementById("result").textContent = "Enter a valid number.";
+      document.getElementById("result").className = "wrong";
+      return;
     }
+    user = String(user);
+  }
 
-    document.getElementById("score").textContent=score;
+  const resultEl = document.getElementById("result");
+  if(user === currentQuestion.answer){
+    score += 1;
+    resultEl.textContent = "✔ Great!";
+    resultEl.className = "correct";
+  } else {
+    wrongLetters.push(`${currentQuestion.prompt} ➜ ${currentQuestion.answer}`);
+    resultEl.textContent = `✘ Wrong! Correct: ${currentQuestion.answer}`;
+    resultEl.className = "wrong";
+  }
 
-    index++;
+  index += 1;
+  setTimeout(refreshPrompt, 120);
+}
 
-    setTimeout(nextLetter,100);
+function showHint(){
+  if(!currentQuestion) return;
+  if(currentQuestion.type === "num"){
+    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt} is letter ${currentQuestion.answer}`;
+  } else if(currentQuestion.type === "letter"){
+    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt} is number ${currentQuestion.answer.charCodeAt(0) - 64}`;
+  } else if(currentQuestion.type === "numsq"){
+    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt}² = ${currentQuestion.answer}`;
+  } else if(currentQuestion.type === "sqnum"){
+    const num = Math.sqrt(Number(currentQuestion.prompt));
+    document.getElementById("result").textContent = `Hint: sqrt(${currentQuestion.prompt}) = ${num}`;
+  } else if(currentQuestion.type === "numcube"){
+    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt}³ = ${currentQuestion.answer}`;
+  } else if(currentQuestion.type === "cubenum"){
+    const num = Math.cbrt(Number(currentQuestion.prompt));
+    document.getElementById("result").textContent = `Hint: ∛(${currentQuestion.prompt}) = ${num.toFixed(0)}`;
+  } else {
+    document.getElementById("result").textContent = `Hint: ${currentQuestion.answer}`;
+  }
+  document.getElementById("result").className = "wrong";
+}
+
+function skipQuestion(){
+  wrongLetters.push(`${currentQuestion.prompt} ➜ ${currentQuestion.answer}`);
+  index += 1;
+  refreshPrompt();
 }
 
 function endGame(){
+  clearInterval(timerInterval);
+  const endTime = Date.now();
+  const elapsedSeconds = Math.floor((endTime - startTime) / 1000);
+  const mins = String(Math.floor(elapsedSeconds / 60)).padStart(2, "0");
+  const secs = String(elapsedSeconds % 60).padStart(2, "0");
+  const accuracy = ((score / totalQuestions) * 100).toFixed(1);
 
-    endTime=Date.now();
+  document.getElementById("letter").textContent = "Finished";
+  document.getElementById("enterText").textContent = "Great work!";
+  document.getElementById("answer").style.display = "none";
+  document.getElementById("submitBtn").style.display = "none";
 
-    let totalTime=((endTime-startTime)/1000).toFixed(2);
+  document.getElementById("summary").innerHTML =
+    `<b>Game Over</b><br>` +
+    `Accuracy: ${accuracy}%<br>` +
+    `Total Time: ${mins}:${secs} minutes<br>` +
+    `Wrong Entries: ${wrongLetters.length ? wrongLetters.join(", ") : "None"}`;
 
-    let accuracy=((score/26)*100).toFixed(1);
-
-    document.getElementById("letter").textContent="Finished";
-
-    document.getElementById("answer").style.display="none";
-    document.getElementById("submitBtn").style.display="none";
-
-    document.getElementById("summary").innerHTML=
-
-    "<b>Game Over</b><br><br>"+
-    "Accuracy: "+accuracy+"%<br>"+
-    "Total Time: "+totalTime+" seconds<br>"+
-    "Wrong Letters: "+(wrongLetters.length?wrongLetters.join(", "):"None");
-
-    document.getElementById("restart").style.display="inline-block";
+  document.getElementById("timer").textContent = `${mins}:${secs}`;
+  document.getElementById("restart").style.display = "inline-block";
+  document.getElementById("progressFill").style.width = "100%";
 }
 
 function restartGame(){
+  index = 0;
+  score = 0;
+  wrongLetters = [];
+  startTime = null;
+  clearInterval(timerInterval);
+  timerInterval = null;
 
-    index=0;
-    score=0;
-    wrongLetters=[];
-    document.getElementById("score").textContent="0";
-    document.getElementById("summary").innerHTML="";
-    document.getElementById("result").textContent="";
+  document.getElementById("score").textContent = "0";
+  document.getElementById("result").textContent = "";
+  document.getElementById("summary").innerHTML = "";
+  document.getElementById("timer").textContent = "00:00";
+  document.getElementById("answer").style.display = "inline-block";
+  document.getElementById("submitBtn").style.display = "inline-block";
+  document.getElementById("restart").style.display = "none";
 
-    document.getElementById("answer").style.display="inline-block";
-    document.getElementById("submitBtn").style.display="inline-block";
-    document.getElementById("restart").style.display="none";
-
-    shuffle();
-    nextLetter();
+  createDeck();
+  refreshPrompt();
 }
 
-document.getElementById("answer").addEventListener("keypress",function(e){
-    if(e.key==="Enter"){
-        checkAnswer();
-    }
+document.getElementById("answer").addEventListener("keydown", function(e){
+  if(e.key === "Enter") checkAnswer();
 });
 
-shuffle();
-nextLetter();
+document.getElementById("mode").addEventListener("change", restartGame);
+document.getElementById("difficulty").addEventListener("change", restartGame);
+document.getElementById("gameType").addEventListener("change", function(){
+  updateModeOptions();
+  restartGame();
+});
 
+updateModeOptions();
+createDeck();
+refreshPrompt();
 </script>
 
 </body>
