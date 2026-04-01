@@ -952,7 +952,8 @@ function refreshPrompt(){
     : currentQuestion.type === "numcube" ? "Type 1..8000"
     : currentQuestion.type === "cubenum" ? "Type 1..20"
     : "Type answer";
-  // Don't call focus() - let keyboard stay open naturally
+  // Force focus to keep keyboard open
+  answerInput.focus();
   updateProgress();
 }
 
@@ -972,7 +973,7 @@ function checkAnswer(){
     timerInterval = setInterval(updateTimer, 250);
   }
 
-  const answerInput = document.getElementById("answer");
+  let answerInput = document.getElementById("answer");
   let user = answerInput.value.trim();
   if(!user){
     document.getElementById("result").textContent = "Enter your answer first.";
@@ -1006,8 +1007,12 @@ function checkAnswer(){
   }
 
   index += 1;
-  // Update immediately without setTimeout - prevents keyboard dismissal
-  refreshPrompt();
+  // Ensure focus is maintained - use requestAnimationFrame for reliable focus after DOM update
+  requestAnimationFrame(() => {
+    refreshPrompt();
+    // Re-focus to keep keyboard open
+    answerInput.focus();
+  });
 }
 
 function showHint(){
@@ -1035,8 +1040,13 @@ function showHint(){
 function skipQuestion(){
   wrongLetters.push(`${currentQuestion.prompt} ➜ ${currentQuestion.answer}`);
   index += 1;
-  // Update immediately without setTimeout
-  refreshPrompt();
+  let answerInput = document.getElementById("answer");
+  // Ensure focus is maintained - use requestAnimationFrame for reliable focus after DOM update
+  requestAnimationFrame(() => {
+    refreshPrompt();
+    // Re-focus to keep keyboard open
+    answerInput.focus();
+  });
 }
 
 function endGame(){
