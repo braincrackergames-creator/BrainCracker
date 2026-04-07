@@ -162,9 +162,96 @@ button#skipBtn:hover {
     box-shadow: 0 6px 20px rgba(250, 112, 154, 0.6);
 }
 
+button.answer-list-btn {
+    background: linear-gradient(135deg, #22c1c3 0%, #fdbb2d 100%);
+    box-shadow: 0 4px 15px rgba(34, 193, 195, 0.35);
+}
+
+button.answer-list-btn:hover {
+    box-shadow: 0 6px 20px rgba(34, 193, 195, 0.55);
+}
+
 #submitBtn {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
+
+#answerListOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    z-index: 1000;
+}
+
+.answer-list-content {
+    width: min(100%, 740px);
+    max-height: min(90vh, 760px);
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.answer-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.answer-list-header h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    color: #333;
+}
+
+.answer-list-header button {
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.answer-list-header button:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+.answer-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.answer-list-item {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    background: #fafafa;
+    color: #333;
+    font-weight: 600;
+    text-align: left;
+}
+
+.answer-list-section {
+    margin-bottom: 22px;
+}
+
+.answer-list-section h4 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: #555;
+}
+
 
 #restart {
     display: none;
@@ -727,6 +814,8 @@ Sharpen your mind with our brain training games. Convert alphabets to numbers, c
       <option value="alphabet">Alphabet Number Game</option>
       <option value="number-square">Number Square Game (1→1² ... 30→900)</option>
       <option value="number-cube">Number Cube Game (1→1³ ... 20→8000)</option>
+      <option value="multiples">Multiplication Tables Game</option>
+      <option value="fraction-percentage">Fraction Percentage Game (1/6 to 1/16)</option>
     </select>
   </label>
   <br>
@@ -739,10 +828,21 @@ Sharpen your mind with our brain training games. Convert alphabets to numbers, c
       <option value="mixed">Mixed Mode</option>
     </select>
   </label>
+  <div id="tableRangeControls" class="table-range-controls" style="display:none; margin-top: 12px; text-align: left;">
+    <label style="display:inline-flex; align-items:center; gap:8px; margin-right:16px;">
+      Tables from
+      <input type="number" id="rangeStart" min="12" max="29" value="12" style="width:70px; padding:8px; border-radius:8px; border:1px solid #ccc;">
+    </label>
+    <label style="display:inline-flex; align-items:center; gap:8px;">
+      to
+      <input type="number" id="rangeEnd" min="12" max="29" value="19" style="width:70px; padding:8px; border-radius:8px; border:1px solid #ccc;">
+    </label>
+    <p style="margin:8px 0 0; color:#555; font-size:0.9em;">Only tables 12–29 are allowed; table 20 is skipped. Multipliers x1 and x10 are excluded.</p>
+  </div>
   <br>
 
-  <button id="hintBtn" onclick="showHint()" style="background:#444;">💡 Hint</button>
   <button id="skipBtn" onclick="skipQuestion()" style="background:#8e44ad;">⏭ Skip</button>
+  <button id="showAnswersBtn" class="answer-list-btn" onclick="showAnswerOverlay()">📘 Show Answers</button>
 </div>
 
 <div id="letter">A</div>
@@ -775,6 +875,16 @@ Sharpen your mind with our brain training games. Convert alphabets to numbers, c
 </div>
 
 <div id="summary" class="summary"></div>
+
+<div id="answerListOverlay" onclick="hideAnswerOverlay()">
+  <div class="answer-list-content" onclick="event.stopPropagation()">
+    <div class="answer-list-header">
+      <h3 id="answerListTitle">Answer List</h3>
+      <button onclick="hideAnswerOverlay()" aria-label="Close">✕</button>
+    </div>
+    <div id="answerListBody"></div>
+  </div>
+</div>
 
 <button id="restart" onclick="restartGame()">↺ Restart Game</button>
 
@@ -814,6 +924,21 @@ function updateModeOptions(){
       <option value="cube-num">Cube → Number</option>
       <option value="mixed">Mixed Mode</option>
     `;
+    document.getElementById("tableRangeControls").style.display = "none";
+  } else if(gameType === "multiples"){
+    modeSelect.innerHTML = `
+      <option value="table">Multiplication Table</option>
+    `;
+    document.getElementById("tableRangeControls").style.display = "block";
+  } else if(gameType === "fraction-percentage"){
+    modeSelect.innerHTML = `
+      <option value="frac-perc">Fraction → Percentage</option>
+      <option value="perc-frac">Percentage → Fraction</option>
+      <option value="mixed">Mixed Mode</option>
+    `;
+    document.getElementById("tableRangeControls").style.display = "none";
+  } else {
+    document.getElementById("tableRangeControls").style.display = "none";
   }
 }
 
@@ -834,12 +959,35 @@ function getEffectiveMode(){
     if(mode === "letter-number" || mode === "number-letter" || mode === "num-cube" || mode === "cube-num") mode = "num-square";
   } else if(gameType === "number-cube"){
     if(mode === "letter-number" || mode === "number-letter" || mode === "num-square" || mode === "square-num") mode = "num-cube";
+  } else if(gameType === "multiples"){
+    if(mode !== "table") mode = "table";
+  } else if(gameType === "fraction-percentage"){
+    if(mode !== "frac-perc" && mode !== "perc-frac" && mode !== "mixed") mode = "frac-perc";
   }
   return mode;
 }
 
 function getDifficulty(){
   return "hard"; // Always use random mode
+}
+
+function getMultiplesTableRange(){
+  const min = 12;
+  const max = 29;
+  let start = Number(document.getElementById("rangeStart").value);
+  let end = Number(document.getElementById("rangeEnd").value);
+
+  if(!Number.isFinite(start)) start = min;
+  if(!Number.isFinite(end)) end = max;
+  start = Math.max(min, Math.min(max, start));
+  end = Math.max(min, Math.min(max, end));
+
+  if(start > end){
+    [start, end] = [end, start];
+  }
+
+  const tables = Array.from({ length: end - start + 1 }, (_, i) => start + i).filter(n => n !== 20);
+  return tables.length ? tables : Array.from({ length: 18 }, (_, i) => i + 12).filter(n => n !== 20);
 }
 
 function createDeck(){
@@ -849,6 +997,12 @@ function createDeck(){
     questionDeck = Array.from({ length: 30 }, (_, i) => i + 1);
   } else if(gameType === "number-cube"){
     questionDeck = Array.from({ length: 20 }, (_, i) => i + 1);
+  } else if(gameType === "multiples"){
+    const tables = getMultiplesTableRange();
+    const multipliers = Array.from({ length: 8 }, (_, i) => i + 2);
+    questionDeck = tables.flatMap(table => multipliers.map(multiplier => ({ table, multiplier })));
+  } else if(gameType === "fraction-percentage"){
+    questionDeck = Array.from({ length: 11 }, (_, i) => i + 6); // 6 to 16
   } else {
     questionDeck = [...letters];
   }
@@ -896,6 +1050,31 @@ function questionForLetter(item){
     return { prompt: String(n * n * n), answer: String(n), type: "cubenum" };
   }
 
+  if(gameType === "multiples"){
+    return {
+      prompt: `${item.table}x${item.multiplier}`,
+      answer: String(item.table * item.multiplier),
+      type: "table"
+    };
+  }
+
+  if(gameType === "fraction-percentage"){
+    const denominator = Number(item);
+    // Truncate to 2 decimals instead of rounding
+    const percentage = String(Math.floor((100 / denominator) * 100) / 100);
+    if(mode === "frac-perc"){
+      return { prompt: `1/${denominator}`, answer: percentage, type: "fracperc" };
+    }
+    if(mode === "perc-frac"){
+      return { prompt: percentage, answer: `1/${denominator}`, type: "percfrac" };
+    }
+    // mixed mode
+    if(Math.random() < 0.5){
+      return { prompt: `1/${denominator}`, answer: percentage, type: "fracperc" };
+    }
+    return { prompt: percentage, answer: `1/${denominator}`, type: "percfrac" };
+  }
+
   if(mode === "letter-number"){
     return { prompt: item, answer: String(item.charCodeAt(0) - 64), type: "num" };
   }
@@ -940,6 +1119,9 @@ function refreshPrompt(){
     : currentQuestion.type === "sqnum" ? "Enter number (from square, 1..30)"
     : currentQuestion.type === "numcube" ? "Enter cube (1→1, 2→8 ... 20→8000)"
     : currentQuestion.type === "cubenum" ? "Enter number (from cube, 1..20)"
+    : currentQuestion.type === "table" ? "Enter the product for the multiplication shown"
+    : currentQuestion.type === "fracperc" ? "Enter percentage (e.g., 16.66)"
+    : currentQuestion.type === "percfrac" ? "Enter denominator only (e.g., 6 for 1/6)"
     : "Enter answer";
   document.getElementById("enterText").textContent = text;
 
@@ -951,6 +1133,9 @@ function refreshPrompt(){
     : currentQuestion.type === "sqnum" ? "Type 1..30"
     : currentQuestion.type === "numcube" ? "Type 1..8000"
     : currentQuestion.type === "cubenum" ? "Type 1..20"
+    : currentQuestion.type === "table" ? "Type the product"
+    : currentQuestion.type === "fracperc" ? "e.g., 16.66"
+    : currentQuestion.type === "percfrac" ? "e.g., 6"
     : "Type answer";
   // Force focus to keep keyboard open
   answerInput.focus();
@@ -995,8 +1180,26 @@ function checkAnswer(){
     user = String(user);
   }
 
+  let isCorrect = false;
+
+  if(currentQuestion.type === "fracperc"){
+    // For fraction to percentage, accept if the number is within 0.01 of the correct answer
+    const userNum = Number(user);
+    if(Number.isFinite(userNum)){
+      const correctNum = Number(currentQuestion.answer);
+      isCorrect = Math.abs(userNum - correctNum) < 0.01;
+    }
+  } else if(currentQuestion.type === "percfrac"){
+    // For percentage to fraction, prepend "1/" to user input
+    user = user.trim().toUpperCase();
+    const userAnswer = `1/${user}`;
+    isCorrect = userAnswer === currentQuestion.answer;
+  } else {
+    isCorrect = user === currentQuestion.answer;
+  }
+
   const resultEl = document.getElementById("result");
-  if(user === currentQuestion.answer){
+  if(isCorrect){
     score += 1;
     resultEl.textContent = "✔ Great!";
     resultEl.className = "correct";
@@ -1013,28 +1216,6 @@ function checkAnswer(){
     // Re-focus to keep keyboard open
     answerInput.focus();
   });
-}
-
-function showHint(){
-  if(!currentQuestion) return;
-  if(currentQuestion.type === "num"){
-    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt} is letter ${currentQuestion.answer}`;
-  } else if(currentQuestion.type === "letter"){
-    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt} is number ${currentQuestion.answer.charCodeAt(0) - 64}`;
-  } else if(currentQuestion.type === "numsq"){
-    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt}² = ${currentQuestion.answer}`;
-  } else if(currentQuestion.type === "sqnum"){
-    const num = Math.sqrt(Number(currentQuestion.prompt));
-    document.getElementById("result").textContent = `Hint: sqrt(${currentQuestion.prompt}) = ${num}`;
-  } else if(currentQuestion.type === "numcube"){
-    document.getElementById("result").textContent = `Hint: ${currentQuestion.prompt}³ = ${currentQuestion.answer}`;
-  } else if(currentQuestion.type === "cubenum"){
-    const num = Math.cbrt(Number(currentQuestion.prompt));
-    document.getElementById("result").textContent = `Hint: ∛(${currentQuestion.prompt}) = ${num.toFixed(0)}`;
-  } else {
-    document.getElementById("result").textContent = `Hint: ${currentQuestion.answer}`;
-  }
-  document.getElementById("result").className = "wrong";
 }
 
 function skipQuestion(){
@@ -1088,9 +1269,104 @@ function restartGame(){
   document.getElementById("answer").style.display = "inline-block";
   document.getElementById("submitBtn").style.display = "inline-block";
   document.getElementById("restart").style.display = "none";
+  hideAnswerOverlay();
 
   createDeck();
   refreshPrompt();
+}
+
+function getAnswerSectionsForCurrentGame(){
+  const gameType = getGameType();
+  const mode = getMode();
+  const sections = [];
+
+  if(gameType === "alphabet"){
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const forward = letters.map(letter => ({ prompt: letter, answer: String(letter.charCodeAt(0) - 64) }));
+    const reverse = letters.map(letter => ({ prompt: String(letter.charCodeAt(0) - 64), answer: letter }));
+
+    if(mode === "number-letter"){
+      sections.push({ title: "Number → Letter", items: reverse });
+    } else if(mode === "letter-number"){
+      sections.push({ title: "Letter → Number", items: forward });
+    } else {
+      sections.push({ title: "Letter → Number", items: forward });
+      sections.push({ title: "Number → Letter", items: reverse });
+    }
+  } else if(gameType === "number-square"){
+    const numbers = Array.from({ length: 30 }, (_, i) => i + 1);
+    const forward = numbers.map(n => ({ prompt: String(n), answer: String(n * n) }));
+    const reverse = numbers.map(n => ({ prompt: String(n * n), answer: String(n) }));
+
+    if(mode === "square-num"){
+      sections.push({ title: "Square → Number", items: reverse });
+    } else if(mode === "num-square"){
+      sections.push({ title: "Number → Square", items: forward });
+    } else {
+      sections.push({ title: "Number → Square", items: forward });
+      sections.push({ title: "Square → Number", items: reverse });
+    }
+  } else if(gameType === "number-cube"){
+    const numbers = Array.from({ length: 20 }, (_, i) => i + 1);
+    const forward = numbers.map(n => ({ prompt: String(n), answer: String(n * n * n) }));
+    const reverse = numbers.map(n => ({ prompt: String(n * n * n), answer: String(n) }));
+
+    if(mode === "cube-num"){
+      sections.push({ title: "Cube → Number", items: reverse });
+    } else if(mode === "num-cube"){
+      sections.push({ title: "Number → Cube", items: forward });
+    } else {
+      sections.push({ title: "Number → Cube", items: forward });
+      sections.push({ title: "Cube → Number", items: reverse });
+    }
+  } else if(gameType === "multiples"){
+    const tables = getMultiplesTableRange();
+    const multipliers = Array.from({ length: 8 }, (_, i) => i + 2);
+    const forward = tables.flatMap(table => multipliers.map(multiplier => ({ prompt: `${table}x${multiplier}`, answer: String(table * multiplier) })));
+    sections.push({ title: `Tables ${tables[0]} to ${tables[tables.length - 1]} (x2..x9)`, items: forward });
+  } else if(gameType === "fraction-percentage"){
+    const fractions = Array.from({ length: 11 }, (_, i) => i + 6);
+    const forward = fractions.map(n => ({ prompt: `1/${n}`, answer: String(Math.floor((100/n) * 100) / 100) }));
+    const reverse = fractions.map(n => ({ prompt: String(Math.floor((100/n) * 100) / 100), answer: `1/${n}` }));
+
+    if(mode === "perc-frac"){
+      sections.push({ title: "Percentage → Fraction", items: reverse });
+    } else if(mode === "frac-perc"){
+      sections.push({ title: "Fraction → Percentage", items: forward });
+    } else {
+      sections.push({ title: "Fraction → Percentage", items: forward });
+      sections.push({ title: "Percentage → Fraction", items: reverse });
+    }
+  }
+
+  return sections;
+}
+
+function showAnswerOverlay(){
+  const sections = getAnswerSectionsForCurrentGame();
+  const titleMap = {
+    alphabet: "Alphabet Answers",
+    "number-square": "Number Square Answers",
+    "number-cube": "Number Cube Answers",
+    multiples: "Multiplication Table Answers",
+    "fraction-percentage": "Fraction Percentage Answers"
+  };
+  document.getElementById("answerListTitle").textContent = titleMap[getGameType()] || "Answer List";
+
+  const body = sections.map(section => {
+    const items = section.items.map(item => `<div class=\"answer-list-item\">${item.prompt} → ${item.answer}</div>`).join("\n");
+    return `<div class=\"answer-list-section\"><h4>${section.title}</h4><div class=\"answer-list-grid\">${items}</div></div>`;
+  }).join("\n");
+
+  document.getElementById("answerListBody").innerHTML = body;
+  document.getElementById("answerListOverlay").style.display = "flex";
+}
+
+function hideAnswerOverlay(){
+  const overlay = document.getElementById("answerListOverlay");
+  if(overlay){
+    overlay.style.display = "none";
+  }
 }
 
 document.getElementById("answer").addEventListener("keydown", function(e){
@@ -1101,6 +1377,8 @@ document.getElementById("answer").addEventListener("keydown", function(e){
 });
 
 document.getElementById("mode").addEventListener("change", restartGame);
+document.getElementById("rangeStart").addEventListener("change", restartGame);
+document.getElementById("rangeEnd").addEventListener("change", restartGame);
 document.getElementById("gameType").addEventListener("change", function(){
   updateModeOptions();
   restartGame();
